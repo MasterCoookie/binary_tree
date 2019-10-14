@@ -60,3 +60,4 @@ tree.root.right.right = Node(7)
 #tree.root.right.right.right = Node(8)
 
 print(tree.print_tree("preorder"))
+#kukle
