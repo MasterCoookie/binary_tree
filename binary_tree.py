@@ -32,13 +32,15 @@ class BinaryTree():
         Input "preorder" for pre-order print'''     
         if traversal_type == "preorder":
             return self.preorder_print(tree.root, "")
+        elif traversal_type == "inorder":
+            return self.inorder_print(tree.root, "")
         
         print("Traversal type", str(traversal_type), "is not supported")
         return False
 
     def preorder_print(self, start, traversal):
         '''Going through a tree in pre-order way is basically
-        printing from the root to the left, if there is no left checking right. If there
+        going from the root to the left, if there is no left checking right. If there
         is no right either going up one node.
 
         start -> updated each time as the method works recursive
@@ -50,6 +52,21 @@ class BinaryTree():
             traversal = self.preorder_print(start.right, traversal)
         return traversal
 
+    def inorder_print(self, start, traversal):
+        '''Going through tree in pre-order way: go left as far as possible, then root, then right.
+
+        start -> updated each time as the method works recursive
+        traversal -> final string of values to be printed, separated by -
+
+        For the ex in the file docstring the resoult will be:
+        4-2-5-1-6-3-7'''
+        if start:
+            traversal = self.inorder_print(start.left, traversal)
+            traversal += (str(start.value) + '-')
+            traversal = self.inorder_print(start.right, traversal)
+        return traversal
+
+
 tree = BinaryTree(1)
 tree.root.left = Node(2)
 tree.root.right = Node(3)
@@ -59,5 +76,4 @@ tree.root.right.left = Node(6)
 tree.root.right.right = Node(7)
 #tree.root.right.right.right = Node(8)
 
-print(tree.print_tree("preorder"))
-#kukle
+print(tree.print_tree("inorder"))
