@@ -34,6 +34,8 @@ class BinaryTree():
             return self.preorder_print(tree.root, "")
         elif traversal_type == "inorder":
             return self.inorder_print(tree.root, "")
+        elif traversal_type == "postorder":
+            return self.postorder_print(tree.root, "")
         
         print("Traversal type", str(traversal_type), "is not supported")
         return False
@@ -66,6 +68,19 @@ class BinaryTree():
             traversal = self.inorder_print(start.right, traversal)
         return traversal
 
+    def postorder_print(self, start, traversal):
+        '''Going through tree in post-order way: go left as far as possible, then right, then root.
+
+        start -> updated each time as the method works recursive
+        traversal -> final string of values to be printed, separated by -
+
+        For the ex in the file docstring the resoult will be:
+        4-2-5-6-3-7-1'''
+        if start:
+            traversal = self.inorder_print(start.left, traversal)
+            traversal = self.inorder_print(start.right, traversal)
+            traversal += (str(start.value) + '-')
+        return traversal
 
 tree = BinaryTree(1)
 tree.root.left = Node(2)
@@ -76,4 +91,6 @@ tree.root.right.left = Node(6)
 tree.root.right.right = Node(7)
 #tree.root.right.right.right = Node(8)
 
-print(tree.print_tree("inorder"))
+#print(tree.print_tree("preorder"))
+#print(tree.print_tree("inorder"))
+print(tree.print_tree("postorder"))
