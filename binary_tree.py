@@ -60,9 +60,7 @@ class BinaryTree():
         traversal -> final string of values to be printed, separated by -
 
         For the ex in the file docstring the resoult will be:
-        4-2-5-1-6-3-7
-        A fact worth noting is that a BST tree read in a in-order way will alaways be read form the
-        smallest to the gratest value.'''
+        4-2-5-1-6-3-7'''
         if start:
             traversal = self.inorder_print(start.left, traversal)
             traversal += (str(start.data) + '-')

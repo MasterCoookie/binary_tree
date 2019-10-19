@@ -29,7 +29,7 @@ class BinarySearchTree():
             self.root = Node(data)
         else:
             self._insert(data, self.root)
-    
+   
     def _insert(self, data, cur_node):
         if data < cur_node.data:
             if cur_node.left is None:
@@ -68,6 +68,47 @@ class BinarySearchTree():
             return True
         return False
 
+    def inorder_print_tree(self):
+        '''Explained in binary_tree.py.
+        Uses helper method _inorder_print_tree() that works recursively.
+        A fact worth noting is that a BST tree read in a in-order way will alaways be read form the
+        smallest to the gratest value.'''
+        if self.root:
+            self._inorder_print_tree(self.root)
+
+    def _inorder_print_tree(self, cur_node):
+        if cur_node:
+            self._inorder_print_tree(cur_node.left)
+            print(str(cur_node.data))
+            self._inorder_print_tree(cur_node.right)
+
+    def is_bst_satisfied(self):
+        '''Checks if a tree satisfies bst property.
+        For this property to be satisfied every .left data has to be less than given node and
+        every .right has to be grater than it.
+        Returns True or False.
+        Uses _is_bst_satisfied() helper mehtod that works recursively.'''
+        if self.root:
+            is_satisfied = self._is_bst_satisfied(self.root, self.root.data)
+        
+            if is_satisfied is None:
+                return True
+            return False
+        return True
+
+    def _is_bst_satisfied(self, cur_node, data):
+        if cur_node.left:
+            if data > cur_node.left.data:
+                return self._is_bst_satisfied(cur_node.left, cur_node.left.data)
+            return False
+
+        if cur_node.right:
+            if data < cur_node.right.data:
+                return self._is_bst_satisfied(cur_node.right, cur_node.right.data)
+            return False
+
+
+
 def main():
     '''main, just for testing'''
     BST = BinarySearchTree()
@@ -79,6 +120,16 @@ def main():
     BST.insert(9)
     BST.insert(11)
     # print(BST.find(4))
+    # print(BST.inorder_print_tree())
+
+    tree = BinarySearchTree()
+    tree.root = Node(1)
+    tree.root.left = Node(2)
+    tree.root.right = Node(3)
+    # print(tree.inorder_print_tree())
+
+    print(BST.is_bst_satisfied())
+    print(tree.is_bst_satisfied())
 
 if __name__ == "__main__":
     main()
