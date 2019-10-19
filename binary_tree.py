@@ -18,6 +18,29 @@ class Node():
         self.left = None
         self.right = None
 
+class Queue():
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, item):
+        self.items.insert(0, item)
+
+    def dequeue(self):
+        '''Removes last node in a Queue()'''
+        if not self.is_empty():
+            return self.items.pop()
+        return None
+
+    def is_empty(self):
+        '''Returns True if Queue() is empty.'''
+        return len(self.items) == 0
+    
+    def peek(self):
+        '''Returns a value of last node in a Queue()'''
+        if not self.is_empty():
+            return self.items[-1].value
+        return None
+
 class BinaryTree():
     '''A whole tree consists of separate Node() objects'''
     def __init__(self, root):
