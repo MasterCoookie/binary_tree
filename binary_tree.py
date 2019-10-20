@@ -19,11 +19,14 @@ class Node():
         self.right = None
 
 class Queue():
+    '''A modified list, created to store node objects'''
     def __init__(self):
         self.items = []
 
     def enqueue(self, item):
+        '''Adds a new node to a queue'''
         self.items.insert(0, item)
+
 
     def dequeue(self):
         '''Removes last node in a Queue()'''
@@ -38,8 +41,15 @@ class Queue():
     def peek(self):
         '''Returns a value of last node in a Queue()'''
         if not self.is_empty():
-            return self.items[-1].value
+            return self.items[-1].data
         return None
+
+    def __len__(self):
+        return self.size()
+
+    def size(self):
+        '''Returns the number of items in a Queue()'''
+        return len(self.items)
 
 class BinaryTree():
     '''A whole tree consists of separate Node() objects'''
@@ -58,6 +68,8 @@ class BinaryTree():
             return self.inorder_print(self.root, "")
         elif traversal_type == "postorder":
             return self.postorder_print(self.root, "")
+        elif traversal_type == "levelorder":
+            return self.levelorder_print(self.root)
         
         print("Traversal type", str(traversal_type), "is not supported")
         return False
@@ -69,7 +81,7 @@ class BinaryTree():
 
         start -> updated each time as the method works recursive
         traversal -> final string of values to be printed, separated by -
-        For the ex in the file docstring the resoult will be 1-2-4-5-3-6-7-'''
+        For the ex in the file docstring the result will be 1-2-4-5-3-6-7-'''
         if start:
             traversal += (str(start.data) + "-")
             traversal = self.preorder_print(start.left, traversal)
@@ -82,7 +94,7 @@ class BinaryTree():
         start -> updated each time as the method works recursive
         traversal -> final string of values to be printed, separated by -
 
-        For the ex in the file docstring the resoult will be:
+        For the ex in the file docstring the result will be:
         4-2-5-1-6-3-7'''
         if start:
             traversal = self.inorder_print(start.left, traversal)
@@ -96,7 +108,7 @@ class BinaryTree():
         start -> updated each time as the method works recursive
         traversal -> final string of values to be printed, separated by -
 
-        For the ex in the file docstring the resoult will be:
+        For the ex in the file docstring the result will be:
         4-2-5-6-3-7-1'''
         if start:
             traversal = self.inorder_print(start.left, traversal)
@@ -104,21 +116,49 @@ class BinaryTree():
             traversal += (str(start.data) + '-')
         return traversal
 
+    def levelorder_print(self, start):
+        '''Going through tree in level-order way: go from top to bottom, left to right
+        as you were reading a normal text.
+
+        start -> starting node
+        For the ex in the file docstring the result will be 1-2-3-4-5-6-7'''
+
+        if start is None:
+            return None
+
+        queue = Queue()
+        queue.enqueue(start)
+
+        traversal = ""
+
+        while len(queue):
+            traversal += str(queue.peek()) + '-'
+            node_removed = queue.dequeue()
+
+            if node_removed.left:
+                queue.enqueue(node_removed.left)
+
+            if node_removed.right:
+                queue.enqueue(node_removed.right)
+
+        return traversal
+
 
 def main():
     '''main, just for testing'''
-    # tree = BinaryTree(1)
-    # tree.root.left = Node(2)
-    # tree.root.right = Node(3)
-    # tree.root.left.left = Node(4)
-    # tree.root.left.right = Node(5)
-    # tree.root.right.left = Node(6)
-    # tree.root.right.right = Node(7)
-    # #tree.root.right.right.right = Node(8)
+    tree = BinaryTree(1)
+    tree.root.left = Node(2)
+    tree.root.right = Node(3)
+    tree.root.left.left = Node(4)
+    tree.root.left.right = Node(5)
+    tree.root.right.left = Node(6)
+    tree.root.right.right = Node(7)
+    #tree.root.right.right.right = Node(8)
 
     # print(tree.print_tree("preorder"))
     # print(tree.print_tree("inorder"))
     # print(tree.print_tree("postorder"))
+    print(tree.print_tree("levelorder"))
 
 if __name__ == "__main__":
     main()
