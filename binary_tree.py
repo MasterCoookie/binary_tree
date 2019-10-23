@@ -143,6 +143,20 @@ class BinaryTree():
 
         return traversal
 
+    def height(self, node):
+        '''Returns the height of a tree.
+        Works recursively.
+        Is extirmely hard to explain how it works, but this video explains it quite well:
+        https://www.youtube.com/watch?v=BDw8zzy3QiY.
+        For the tree in file docstring it would return 2.'''
+        # if we hit empty node return -1 that will become 0 when returning
+        if node is None:
+            return -1
+        left_height = self.height(node.left)
+        right_height = self.height(node.right)
+
+        return 1 + max(left_height, right_height)
+
 
 def main():
     '''main, just for testing'''
@@ -151,14 +165,15 @@ def main():
     tree.root.right = Node(3)
     tree.root.left.left = Node(4)
     tree.root.left.right = Node(5)
-    tree.root.right.left = Node(6)
-    tree.root.right.right = Node(7)
+    # tree.root.right.left = Node(6)
+    # tree.root.right.right = Node(7)
     #tree.root.right.right.right = Node(8)
 
     # print(tree.print_tree("preorder"))
     # print(tree.print_tree("inorder"))
     # print(tree.print_tree("postorder"))
-    print(tree.print_tree("levelorder"))
+    # print(tree.print_tree("levelorder"))
+    print(tree.height(tree.root))
 
 if __name__ == "__main__":
     main()
