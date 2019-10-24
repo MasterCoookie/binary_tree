@@ -157,6 +157,19 @@ class BinaryTree():
 
         return 1 + max(left_height, right_height)
 
+    def size(self, start, size=0):
+        '''Returns the number of nodes in a binary tree.
+
+        start -> the node from whitch to start counting.
+        size -> int used to make recursive calls.
+        
+        Works recursively.'''
+        if start:
+            size += 1
+            size = self.size(start.left, size)
+            size = self.size(start.right, size)
+
+        return size
 
 def main():
     '''main, just for testing'''
@@ -165,7 +178,7 @@ def main():
     tree.root.right = Node(3)
     tree.root.left.left = Node(4)
     tree.root.left.right = Node(5)
-    # tree.root.right.left = Node(6)
+    tree.root.right.left = Node(6)
     # tree.root.right.right = Node(7)
     #tree.root.right.right.right = Node(8)
 
@@ -173,7 +186,8 @@ def main():
     # print(tree.print_tree("inorder"))
     # print(tree.print_tree("postorder"))
     # print(tree.print_tree("levelorder"))
-    print(tree.height(tree.root))
+    # print(tree.height(tree.root))
+    print(tree.size(tree.root))
 
 if __name__ == "__main__":
     main()
