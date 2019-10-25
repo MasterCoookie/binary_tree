@@ -37,7 +37,7 @@ class Queue():
     def is_empty(self):
         '''Returns True if Queue() is empty.'''
         return len(self.items) == 0
-    
+
     def peek(self):
         '''Returns a value of last node in a Queue()'''
         if not self.is_empty():
@@ -70,7 +70,7 @@ class BinaryTree():
             return self.postorder_print(self.root, "")
         elif traversal_type == "levelorder":
             return self.levelorder_print(self.root)
-        
+
         print("Traversal type", str(traversal_type), "is not supported")
         return False
 
@@ -162,12 +162,34 @@ class BinaryTree():
 
         start -> the node from whitch to start counting.
         size -> int used to make recursive calls.
-        
+
         Works recursively.'''
         if start:
             size += 1
             size = self.size(start.left, size)
             size = self.size(start.right, size)
+
+        return size
+
+    def size_iterative(self):
+        '''Returns the number of nodes in a binary tree but as the name suggests it differs from
+        size() in the approach. Works similarly to level-order traversal'''
+        size = 0
+        if not self.root:
+            return size
+
+        queue = Queue()
+        queue.enqueue(self.root)
+
+        while len(queue):
+            size += 1
+            node_removed = queue.dequeue()
+
+            if node_removed.left:
+                queue.enqueue(node_removed.left)
+
+            if node_removed.right:
+                queue.enqueue(node_removed.right)
 
         return size
 
@@ -187,7 +209,8 @@ def main():
     # print(tree.print_tree("postorder"))
     # print(tree.print_tree("levelorder"))
     # print(tree.height(tree.root))
-    print(tree.size(tree.root))
+    # print(tree.size(tree.root))
+    print(tree.size_iterative())
 
 if __name__ == "__main__":
     main()
